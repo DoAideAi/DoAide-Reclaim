@@ -8,6 +8,7 @@
     python3 -m reclaim card R001 --png --detail "Grandpa's 1994 shares"
     python3 -m reclaim shared R001 yes
     python3 -m reclaim report
+    python3 -m reclaim site                                  -> rebuild site/index.html
 """
 from __future__ import annotations
 
@@ -17,7 +18,7 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from . import cases, checklist, portals, report
+from . import cases, checklist, portals, report, site
 from . import card as cards
 from .money import parse_amount
 from .privacy import IdentifierError
@@ -67,7 +68,9 @@ def cmd_record(args, store):
         text = sys.stdin.read() if args.reply == "-" else Path(args.reply).read_text(encoding="utf-8")
         applied = cases.apply_reply(case, text)
         store.save(case)
-        print(f"{case['id']}: {len(applied)} results recorded")
+        listed = sum(1 for entry in applied if entry.get("type") == "member")
+        print(f"{case['id']}: {len(applied) - listed} results recorded"
+              + (f", {listed} relatives listed" if listed else ""))
         return
     if not (args.member and args.portal and args.status):
         raise cases.CaseError("give MEMBER PORTAL STATUS, or --reply FILE")
@@ -123,6 +126,10 @@ def cmd_delete(args, store):
         raise cases.CaseError(f"this erases {args.case} for good; add --yes")
     store.delete(args.case)
     print(f"{args.case} deleted")
+
+
+def cmd_site(args, store):
+    print(site.write(Path(args.out) / "index.html" if args.out else site.SITE))
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -191,6 +198,10 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("case")
     p.add_argument("--yes", action="store_true")
     p.set_defaults(func=cmd_delete)
+
+    p = sub.add_parser("site", help="rebuild the reclaim.doaide.com page from the portal registry")
+    p.add_argument("--out", help="output folder (default: site/ in the repository)")
+    p.set_defaults(func=cmd_site)
     return parser
 
 

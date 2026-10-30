@@ -68,6 +68,19 @@ Chrome or Chromium is installed) go to `data/cards/<case>/`.
 How to run the 20-family test, the consent script and the decision rule are in
 [docs/HIT_RATE_TEST.md](docs/HIT_RATE_TEST.md).
 
+## The family page: [reclaim.doaide.com](https://reclaim.doaide.com)
+
+Instead of the WhatsApp checklist, a family can work through the same scan on one static page. They
+list their relatives, tick which details they have, open each official site from it and mark what
+they saw. "Send on WhatsApp" produces lines that list the relatives (`m1 is father late knows
+dob,address`) followed by the results; `record R001 --reply reply.txt` imports both, all or nothing.
+Sending the same text twice changes nothing.
+
+The page is built from the same portal registry as the CLI: `python3 -m reclaim site` rebuilds
+`site/index.html`, and a test fails while the committed page is stale. It has no server storage,
+makes no network requests and loads nothing from third parties. The list stays in the browser
+(localStorage) until "Clear everything".
+
 ## Privacy
 
 * Reclaim records **which** details a family has ("knows a date of birth"), never the details. PAN,

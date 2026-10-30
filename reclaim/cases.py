@@ -207,7 +207,8 @@ def parse_reply(text: str) -> Tuple[List[dict], List[str]]:
         m1 udgam found            m1 iepf found 3.2 lakh     m1 iepf found ~1.5 lakh (estimate)
         m1 lic no                 m2 mitra blocked otp
 
-    Returns (records, errors); errors name the line so nothing is guessed.
+    Replies from reclaim.doaide.com also list the relatives first, as `m1 is father late knows
+    dob,address`. Returns (records, errors); errors name the line so nothing is guessed.
     """
     records: List[dict] = []
     errors: List[str] = []
@@ -216,6 +217,12 @@ def parse_reply(text: str) -> Tuple[List[dict], List[str]]:
         if not line or line.startswith("#"):
             continue
         words = line.split()
+        if len(words) >= 3 and words[1].lower() == "is":
+            try:
+                records.append(_parse_member_line(words))
+            except CaseError as exc:
+                errors.append(f"line {number}: {exc}")
+            continue
         if len(words) < 3:
             errors.append(f"line {number}: expected '<member> <portal> <found|no|blocked> ...': {raw!r}")
             continue
@@ -245,16 +252,55 @@ def parse_reply(text: str) -> Tuple[List[dict], List[str]]:
     return records, errors
 
 
+def _parse_member_line(words: List[str]) -> dict:
+    member_id = words[0].lower()
+    if not re.fullmatch(r"m\d+", member_id):
+        raise CaseError(f"{words[0]!r} is not a relative id like m1")
+    rest = [word.lower() for word in words[2:]]
+    relation = rest.pop(0)
+    deceased = bool(rest) and rest[0] in ("late", "deceased")
+    if deceased:
+        rest.pop(0)
+    knows: List[str] = []
+    if rest and rest[0] == "knows":
+        knows = [name for word in rest[1:] for name in word.split(",") if name]
+        rest = []
+    if rest:
+        raise CaseError(f"unexpected {' '.join(rest)!r}; expected 'm1 is father late knows dob,address'")
+    return {"type": "member", "member": member_id, "relation": relation, "deceased": deceased, "knows": knows}
+
+
+def _describe(entry: dict) -> str:
+    return entry["relation"] + (" (late)" if entry["deceased"] else "")
+
+
+def _ensure_member(case: dict, entry: dict) -> None:
+    """Add a relative listed in a reply, or confirm the one the operator already added."""
+    for existing in case["members"]:
+        if existing["id"] == entry["member"]:
+            if (existing["relation"], existing["deceased"]) != (entry["relation"], entry["deceased"]):
+                raise CaseError(f"is {_describe(existing)} in {case['id']}, but the reply says {_describe(entry)}")
+            existing["knows"] = portals.normalise_facts(entry["knows"])
+            return
+    expected = f"m{len(case['members']) + 1}"
+    if entry["member"] != expected:
+        raise CaseError(f"the next relative in {case['id']} is {expected}")
+    add_member(case, entry["relation"], entry["deceased"], entry["knows"])
+
+
 def apply_reply(case: dict, text: str) -> List[dict]:
-    """Apply every line of a reply or none of them."""
+    """Apply every line of a reply or none of them; listed relatives are added before results."""
     records, errors = parse_reply(text)
     trial = json.loads(json.dumps(case))
-    for entry in records:
+    for entry in sorted(records, key=lambda item: item.get("type") != "member"):
         try:
-            record(trial, entry["member"], entry["portal"], entry["status"],
-                   amount=entry["amount"], estimate=entry["estimate"], reason=entry["reason"])
+            if entry.get("type") == "member":
+                _ensure_member(trial, entry)
+            else:
+                record(trial, entry["member"], entry["portal"], entry["status"],
+                       amount=entry["amount"], estimate=entry["estimate"], reason=entry["reason"])
         except (CaseError, ValueError) as exc:
-            errors.append(f"{entry['member']} {entry['portal']}: {exc}")
+            errors.append(f"{entry['member']} {entry.get('portal', '')}".rstrip() + f": {exc}")
     if errors:
         raise CaseError("reply not applied:\n  " + "\n  ".join(errors))
     case.clear()
