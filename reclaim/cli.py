@@ -8,7 +8,7 @@
     python3 -m reclaim card R001 --png --detail "Grandpa's 1994 shares"
     python3 -m reclaim shared R001 yes
     python3 -m reclaim report
-    python3 -m reclaim site                                  -> rebuild site/index.html
+    python3 -m reclaim site                                  -> rebuild site/index.html and site/dhanteras/
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 from typing import List, Optional
 
-from . import cases, checklist, portals, report, site
+from . import cases, checklist, dhanteras, portals, report, site
 from . import card as cards
 from .money import parse_amount
 from .privacy import IdentifierError
@@ -129,7 +129,10 @@ def cmd_delete(args, store):
 
 
 def cmd_site(args, store):
-    print(site.write(Path(args.out) / "index.html" if args.out else site.SITE))
+    root = Path(args.out) if args.out else site.SITE.parent
+    print(site.write(root / "index.html"))
+    for path in dhanteras.write(root / "dhanteras", png=args.png):
+        print(path)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -199,8 +202,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--yes", action="store_true")
     p.set_defaults(func=cmd_delete)
 
-    p = sub.add_parser("site", help="rebuild the reclaim.doaide.com page from the portal registry")
+    p = sub.add_parser("site", help="rebuild the reclaim.doaide.com pages (guide and /dhanteras/)")
     p.add_argument("--out", help="output folder (default: site/ in the repository)")
+    p.add_argument("--png", action="store_true", help="also re-render dhanteras/card.png and og.png with Chrome")
     p.set_defaults(func=cmd_site)
     return parser
 

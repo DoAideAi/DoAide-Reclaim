@@ -195,7 +195,7 @@ def find_chrome() -> Optional[str]:
     return None
 
 
-def render_png(svg_text: str, out_png: Path, chrome: Optional[str] = None) -> Path:
+def render_png(svg_text: str, out_png: Path, chrome: Optional[str] = None, size=(W, H)) -> Path:
     chrome = chrome or find_chrome()
     if not chrome:
         raise CardError("a PNG needs Chrome or Chromium; open the .html card and use its save button instead")
@@ -210,7 +210,7 @@ def render_png(svg_text: str, out_png: Path, chrome: Optional[str] = None) -> Pa
         command = [
             chrome, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--no-first-run",
             "--no-default-browser-check", "--force-device-scale-factor=1",
-            f"--user-data-dir={Path(tmp) / 'profile'}", f"--window-size={W},{H}",
+            f"--user-data-dir={Path(tmp) / 'profile'}", f"--window-size={size[0]},{size[1]}",
             f"--screenshot={out_png}", sheet.as_uri(),
         ]
         try:

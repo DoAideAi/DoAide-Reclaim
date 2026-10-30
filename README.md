@@ -82,6 +82,14 @@ The page is built from the same portal registry as the CLI: `python3 -m reclaim 
 makes no network requests and loads nothing from third parties. The list stays in the browser
 (localStorage) until "Clear everything".
 
+**Dhanteras push** ([reclaim.doaide.com/dhanteras](https://reclaim.doaide.com/dhanteras/), until
+Friday 6 November 2026). One message in Hindi and English: before you buy new gold, find the money
+your family forgot. It shows the three sourced figures and the three steps, and links to the guide.
+It carries a 1080x1350 card to forward in family WhatsApp groups and a 1200x630 preview image, so a
+shared link unfolds large. `python3 -m reclaim site` rebuilds it with the guide; `--png` re-renders
+the two PNGs with Chrome, and a test fails while any committed file is stale. Invites for the push
+are in [docs/RECRUITING.md](docs/RECRUITING.md#dhanteras-push-until-friday-6-november).
+
 ## Privacy
 
 * Reclaim records **which** details a family has ("knows a date of birth"), never the details. PAN,
@@ -115,5 +123,6 @@ python3 -m reclaim portals --sources         # re-check these against the live s
 * UDGAM inputs and results: [RBI FAQ](https://rbidocs.rbi.org.in/rdocs/faqs/PDFs/FAQONUDGAMPORTAL.PDF), [ET on the result grid](https://economictimes.indiatimes.com/wealth/save/more-than-8-lakh-people-got-unclaimed-deposits-back-from-bank-via-udgam/articleshow/122998219.cms)
 * MITRA: [SEBI circular, 12 Feb 2025](https://www.sebi.gov.in/legal/circulars/feb-2025/service-platform-for-investors-to-trace-inactive-and-unclaimed-mutual-fund-folios-mitra-mutual-fund-investment-tracing-and-retrieval-assistant-_91847.html)
 * IEPF-5 claim steps: [Form IEPF-5 (Gazette, 2025)](https://egazette.gov.in/WriteReadData/2025/266617.pdf); LIC and Bima Bharosa fields were read from the live forms on 29 Oct 2026.
+* Dhanteras on Friday 6 November 2026 (Trayodashi covers that evening): [Drik Panchang](https://www.drikpanchang.com/festivals/dhanteras/festivals-dhanteras-puja-timings.html)
 
 MIT licence. Not affiliated with RBI, SEBI, IRDAI, the IEPF Authority, LIC or any bank.

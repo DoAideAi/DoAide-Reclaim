@@ -101,6 +101,49 @@ Hindi:
 >
 > Looking for 20 families to try it this week. DM me.
 
+## Dhanteras push (until Friday 6 November)
+
+Dhanteras is the day families buy gold, so the push asks them to look for the family's forgotten
+money first. Send people to [reclaim.doaide.com/dhanteras](https://reclaim.doaide.com/dhanteras/):
+it is in Hindi and English, gives the three steps and links to the guide. In family groups send the
+card image first (the page's download button, or https://reclaim.doaide.com/dhanteras/card.png) and
+the message right after it. A link sent on its own unfolds into a large preview image.
+
+Results arrive exactly as above: the guide's "Send on WhatsApp" lines, consent script first, the same
+channel names. The case dates show which families came in during the push.
+
+## Dhanteras: WhatsApp family group
+
+Hindi (pick रहा or रही before sending):
+
+> इस धनतेरस सोना ख़रीदने से पहले एक काम कर लीजिए: देख लीजिए कि परिवार का कोई पैसा सरकार के पास
+> बिना दावे के तो नहीं पड़ा। दादा-दादी, नाना-नानी या माता-पिता के पुराने बैंक खाते, शेयर, LIC और
+> म्यूचुअल फंड। सिर्फ़ RBI के पास ₹86,917 करोड़ ऐसे पड़े हैं।
+>
+> सरकारी साइटों पर एक शाम में खोजने का मुफ़्त तरीका: https://reclaim.doaide.com/dhanteras/
+> PAN और जन्मतिथि सिर्फ़ सरकारी साइट पर डालें, कहीं और नहीं।
+>
+> कुछ मिले तो मुझे बताइए, कुछ न मिले तब भी। मैं 20 परिवारों के साथ इसे टेस्ट कर रहा/रही हूँ।
+
+English:
+
+> Before buying gold this Dhanteras, check whether any of the family's money is sitting unclaimed
+> with the government: grandparents' or parents' old bank accounts, shares, LIC and mutual funds.
+> RBI alone holds ₹86,917 crore of it.
+>
+> A free way to search the official sites in one evening: https://reclaim.doaide.com/dhanteras/
+> Type PAN and dates of birth only on the official sites, nowhere else.
+>
+> Tell me what you find, even if it's nothing. I'm testing this with 20 families.
+
+## Dhanteras: X
+
+> Before buying gold this Dhanteras, check the government's unclaimed-money portals for your
+> family: old bank accounts, shares, LIC, mutual funds. RBI alone holds ₹86,917 crore.
+>
+> Free guide, one evening, in Hindi and English:
+> https://reclaim.doaide.com/dhanteras/
+
 ## Pace
 
 Twenty finished families in two weeks probably takes 40 to 60 invites. That is a guess, not a
