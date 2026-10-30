@@ -66,7 +66,8 @@ names the line. Cards (`card.svg`, a `card.html` with a save/share button, and `
 Chrome or Chromium is installed) go to `data/cards/<case>/`.
 
 How to run the 20-family test, the consent script and the decision rule are in
-[docs/HIT_RATE_TEST.md](docs/HIT_RATE_TEST.md).
+[docs/HIT_RATE_TEST.md](docs/HIT_RATE_TEST.md); invites for each channel are in
+[docs/RECRUITING.md](docs/RECRUITING.md).
 
 ## The family page: [reclaim.doaide.com](https://reclaim.doaide.com)
 

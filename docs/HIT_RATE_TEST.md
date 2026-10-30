@@ -30,8 +30,11 @@ urban and salaried, so recruit from at least three channels and record each with
 
 1. **Recruit** 20 families from at least three channels (family, friends, X/LinkedIn, a WhatsApp
    group). Older relatives who have died are the most promising searches. Ask in advance whether
-   anyone kept old passbooks, share certificates or policies.
+   anyone kept old passbooks, share certificates or policies. Ready-to-send invites in English and
+   Hindi, and the steps for results sent from reclaim.doaide.com, are in [RECRUITING.md](RECRUITING.md).
 2. **Consent.** Read or send the script below, then run `reclaim new --consent --channel <where>`.
+   Families who use the page do steps 3 to 5 there: send them the script when their results arrive,
+   and record nothing until they agree.
 3. **Roster.** Run `reclaim member` once per relative, with `--knows` set to the details the family
    *has* (never the values) and `--skip` for portals that clearly do not apply.
 4. **Checklist.** Send them the output of `reclaim checklist R00N`. A NOT READY line tells them which
